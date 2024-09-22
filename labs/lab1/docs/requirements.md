@@ -3,8 +3,8 @@
 Upload a **pdf** file with codes, analysis/answers and pictures for all the questions.
 
 # Chapter 2
-1. Create a tensor a from `list(range(9))` . Predict then check what the size, offset, and strides are.
-2. Create a tensor `b = a.view(3, 3)` . What is the value of `b[1,1]` ?
+1. Create a tensor `a` from `list(range(9))` . Predict then check what the size, offset, and strides are.
+2. Create a tensor `b = a.view(3, 3)` . What is the value of `b[1, 1]` ?
 3. Create a tensor `c = b[1:,1:]` . Predict then check what the size, offset, and strides are.
 
 # Chapter 3
