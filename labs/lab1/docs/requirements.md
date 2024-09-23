@@ -14,7 +14,6 @@ Upload a **pdf** file with codes, analysis/answers and pictures for all the ques
 - Now take the mean of each channel of your images. Can you identify the red, green, and blue items from only the channel averages?
 
 2. Select a relatively large file containing Python source code.
-
 - Build an index of all the words in the source file. (Feel free to make your tokenization as simple or as complex as you like; we suggest starting by replacing `r"[^a-zA-Z0-9_]+"` with spaces.)
 
 - Compare your index with the one you made for *Pride and Prejudice* . Which is larger?
