@@ -17,13 +17,13 @@ Upload a **pdf** file with codes, analysis/answers and pictures for all the ques
 
 - Build an index of all the words in the source file. (Feel free to make your tokenization as simple or as complex as you like; we suggest starting by replacing `r"[^a-zA-Z0-9_]+"` with spaces.)
 
-- Compare your index with the one you made for Pride and Prejudice. Which is larger?
+- Compare your index with the one you made for *Pride and Prejudice* . Which is larger?
 - Create the one-hot encoding for the source code file.
 - What information is lost with this encoding? How does that information compare with what’s lost in the Pride and Prejudice encoding?
 
 # Chapter 4
 
-1. Redefine the model to be `w2 * t_u ** 2 + w1 * t_u + b` .
+1. Redefine the model to be $w_2 \cdot {t_u}^2 + w_1 \cdot t_u + b$ .
 
 - What parts of the training loop and so on must be changed to accommodate this redefinition? What parts are agnostic to swapping out the model?
 - Is the resulting loss higher or lower after training? Is the result better or worse?
