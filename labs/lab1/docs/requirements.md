@@ -35,7 +35,6 @@ Upload a **pdf** file with codes, analysis/answers and pictures for all the ques
 - Can you get the model to obviously overfit the data?
 
 2. The third-hardest problem in physics is finding a proper wine to celebrate discoveries. Load the wine data from chapter 3 and create a new model with the appropriate number of input parameters.
-- How long does it take to train compared to the temperature data you’ve been using?
 - Can you explain what factors contribute to the training times?
 - Can you get the loss to decrease while training on this data set?
 - How would you go about graphing this data set?
