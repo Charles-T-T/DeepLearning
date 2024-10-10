@@ -1,4 +1,4 @@
-# Lab1: Pytorch Practice
+# Lab 1: Pytorch Practice
 
 ```bash
 ├── docs/                      
