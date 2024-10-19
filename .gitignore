@@ -1,9 +1,12 @@
-**/draft
-
-**/practice.ipynb
+draft/
 
 submit/
 
 /textbook
 
 /ppt
+
+*.doc
+*.docx
+
+**/practice.ipynb
