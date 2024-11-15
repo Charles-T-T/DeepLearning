@@ -1,6 +1,6 @@
 # Lab 3：手写数字识别
 
-:man_student: 2022201535 樊昊天
+:man_student: Charles
 
 ## 实验概述
 
@@ -178,9 +178,11 @@ test_loader = MyDataLoader(test_set, batch_size=64, shuffle=False, device=my_dev
 ##### 前向传播
 
 线性变换的数学定义为：
+
 $$
 y = xW^T + b
 $$
+
 其中：
 
 - $x$ 是大小为 $input\_size$ 输入向量
@@ -207,13 +209,17 @@ def forward(self, x):
 > 后续代码中，下一层传回本层的梯度均记作 `grad_out` （out表示是对本层输出的梯度）
 
 计算 $L$ 对 $W$ 的梯度 $\frac{\partial L}{\partial W}$ ，根据链式法则有：
+
 $$
 \frac{\partial L}{\partial W} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial W}
 $$
+
 其中， $\frac{\partial y}{\partial W}$ 即在线性变换 $y = xW^T + b$ 中对 $W$ 求偏导，易得结果为 $x$ ，所以 $W$ 的反向传播公式为：
+
 $$
 \frac{\partial L}{\partial W} = \frac{\partial L}{\partial y} \cdot x
 $$
+
 代码层面，考虑按批次训练，则 $\frac{\partial L}{\partial y}$ 是形状为 $(batch\_size, output\_size)$ 的梯度矩阵， $x$ 是形状为 $(batch\_size, input\_size)$ 的输入矩阵，故它们相乘时前者需要转置：
 
 ```python
@@ -221,13 +227,17 @@ self.grad_weights = torch.matmul(grad_out.T, self.x)
 ```
 
 计算 $L$ 对 $b$ 的梯度 $\frac{\partial L}{\partial b}$ ，根据链式法则有：
+
 $$
 \frac{\partial L}{\partial b} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial b}
 $$
+
 其中， $\frac{\partial y}{\partial b}$ 即在线性变换 $y = xW^T + b$ 中对 $b$ 求偏导，易得结果为 $1$ ，所以 $b$ 的反向传播公式为：
+
 $$
 \frac{\partial L}{\partial b} = \frac{\partial L}{\partial y}
 $$
+
 代码层面，考虑按批次训练，即 $\frac{\partial L}{\partial b} = \sum^{batch\_size}_{i =1}\frac{\partial L}{\partial y_i}$ ，有：
 
 ```python
@@ -235,13 +245,17 @@ self.grad_bias = torch.sum(grad_out, dim=0)
 ```
 
 计算 $L$ 对线性层输入 $x$ 的梯度 $\frac{\partial L}{\partial x}$ ，根据链式法则有:
+
 $$
 \frac{\partial L}{\partial x} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial x}
 $$
+
 其中， $\frac{\partial y}{\partial x}$ 即在线性变换 $y = xW^T + b$ 中对 $x$ 求偏导，易得结果为 $W$ ，所以 $x$ 的反向传播公式为：
+
 $$
 \frac{\partial L}{\partial x} = \frac{\partial L}{\partial y} \cdot W
 $$
+
 相应代码为：
 
 ```python
@@ -253,10 +267,12 @@ grad_in = torch.matmul(grad_out, self.weights)
 ##### 更新参数
 
 根据上面计算出的参数梯度，按照梯度下降法更新参数：
+
 $$
 W \leftarrow W - \eta \cdot \frac{\partial L}{\partial W} \\
 b \leftarrow b - \eta \cdot \frac{\partial L}{\partial b}
 $$
+
 其中 $\eta$ 为学习率。
 
 据此写出相应代码为：
@@ -319,6 +335,7 @@ class MyLinear():
 ##### 前向传播
 
 ReLU函数的数学定义为：
+
 $$
 y = ReLU(x) = 
 \begin{cases}
@@ -326,6 +343,7 @@ x, \ x >0 \\
 0, \ x \le 0
 \end{cases}
 $$
+
 据此，可写出ReLU层的前向传播代码：
 
 ```python
@@ -338,10 +356,13 @@ def forward(self, x):
 ##### 反向传播
 
 计算ReLU层的梯度，即损失 $L$ 对输入 $x$ 的偏导数 $\frac{\partial L}{\partial x}$ 。由于反向传播过程中，下一层会传回 $L$ 对ReLU输出 $y$ 的梯度 $\frac{\partial L}{\partial y}$ ，故根据链式法则ReLU的梯度可以写成
+
 $$
 \frac{\partial L}{\partial x} = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial x}
 $$
+
 其中， $\frac{\partial y}{\partial x}$ 即对 $ReLU(x)$ 求导，易得：
+
 $$
 \frac{\partial y}{\partial x} = 
 \begin{cases}
@@ -349,7 +370,9 @@ $$
 0, \ x \le 0
 \end{cases}
 $$
+
 所以，ReLU的反向传播公式为：
+
 $$
 \frac{\partial L}{\partial x} = \frac{\partial L}{\partial y} \cdot
 \begin{cases}
@@ -362,6 +385,7 @@ $$
 0, \quad  x \le 0
 \end{cases}
 $$
+
 根据上面的公式，可以写出反向传播代码：
 
 ```python
@@ -394,9 +418,11 @@ class ReLU:
 Softmax函数的数学定义为：
 
 对于输入向量 $\ x = [x_1, \ x_2, \dots, \ x_n]$ ，Softmax的输出向量 $\hat{y} = [\hat{y}_1, \ \hat{y}_2, \dots, \ \hat{y}_n]$ 中的每个元素 $\hat{y}_i$ 有
+
 $$
 \hat{y}_i = Softmax(x_i) = \frac{e^{x_i}}{\sum^{n}_{j=1} e^{x_j}}, \ \ j = 1,2,\dots,n
 $$
+
 故Softmax的输出 $\hat{y}$ 是一个概率分布（代码中将其记作 `probs` ），据此可写出其前向传播代码：
 
 ```python
@@ -410,13 +436,17 @@ def forward(self, x):
 ##### 交叉熵损失
 
 交叉熵（cross entropy）的数学定义为：
+
 $$
 H(p, q) = - \sum_{x}p(x) \log{q(x)}
 $$
+
 其中 $p, q$ 是两个概率分布。因此本实验中，可以先将实际标签进行one-hot编码，则对于每个样本，其交叉熵损失函数为：
+
 $$
 L(y, \ \hat{y}) = -\sum^{C}_{j=1} y_j \log{\hat{y_j}}
 $$
+
 其中：
 
 - $C$ 是类别数（本实验中为10）
@@ -424,9 +454,11 @@ $$
 - $\hat{y}$ 是该样本的预测标签（概率分布）， $\hat{y_j}$ 表示预测的该样本属于标签 $j$ 的概率（由softmax得出）
 
 因此，对于每一批次的 $N$ 个样本，可得其mini-batch损失为：
+
 $$
 L = - \frac{1}{N} \sum^{N}_{i=1} \sum^{C}_{j=1}{y_j \log{\hat{y_j}}}
 $$
+
 据此，可写出交叉熵损失函数代码：
 
 ```python
@@ -452,31 +484,40 @@ def cross_entropy(self, predictions, truths):
 ##### 反向传播
 
 计算Softmax层的梯度，即 $L$ 对输入 $x$ 的偏导数 $\frac{\partial{L}}{\partial{x}}$ 。根据链式法则，可将其写成
+
 $$
 \frac{\partial L}{\partial x} = \frac{\partial L}{\partial{\hat{y}}} \cdot \frac{\partial{\hat{y}}}{\partial x}
 $$
+
 故对于 $x$ 中的某个样本 $x_i$ ，有
+
 $$
 \frac{\partial L}{\partial x_i} = \frac{\partial L}{\partial{\hat{y}}} \cdot \frac{\partial{\hat{y}}}{\partial x_i} \quad (1)
 $$
 
 
 其中 $\hat{y}$ 是Softmax层的输出。根据上面的Softmax公式，对于某个样本有：
+
 $$
 \frac{\partial L}{\partial{\hat{y}_j}} = \frac{\partial{(-\sum^{C}_{j=1} y_j \log{\hat{y}_j}})}{\partial{\hat{y}_j}} = - \frac{y_j}{\hat{y}_j} \quad (2)
 $$
+
 将 $(1)$ 展开后可带入 $(2)$ ：
+
 $$
 \frac{\partial L}{\partial x_i} 
 = \frac{\partial L}{\partial{\hat{y}}} \cdot \frac{\partial{\hat{y}}}{\partial x_i} 
 = \sum^{n}_{j=1} \frac{\partial L}{\partial{\hat{y}_j}} \cdot \frac{\partial{\hat{y}_j}}{\partial x_i} 
 = - \sum^{n}_{j=1} \frac{y_j}{\hat{y}_j} \cdot \frac{\partial{\hat{y}_j}}{\partial x_i} \quad (3)
 $$
+
 不妨假设该样本的正确标签为 $k$ ，即one-hot编码后的 $y = [y_1, \ y_2, \dots, \ y_n]$ 中，只有 $y_k = 1$ 、其他 $y_j=  0$ ， 则 $(3)$ 可以进一步化简为：
+
 $$
 \frac{\partial L}{\partial x_i} = - \frac{y_k}{\hat{y}_k} \cdot \frac{\partial{\hat{y}_k}}{\partial x_i} 
 \quad (4)
 $$
+
 显然，接下来需要计算 $\frac{\partial{\hat{y}_k}}{\partial x_k}$ 。需要分两种情况：
 
 - 当 $i = k$ ，
@@ -509,6 +550,7 @@ $$
 $$
 
 将 $(5), (6)$ 带入 $(4)$ ，得：
+
 $$
 \frac{\partial L}{\partial x_i} 
 = 
@@ -517,7 +559,9 @@ $$
 - \frac{y_k}{\hat{y}_k} \cdot (-\hat{y}_k \cdot \hat{y}_i) = y_k \cdot \hat{y}_i = \hat{y}_i, \quad  i \neq k \\
 \end{cases}
 $$
+
 综上所述，可以得到Softmax层的反向传播公式为：
+
 $$
 \frac{\partial L}{\partial x}
 = 
@@ -545,7 +589,9 @@ $$
 \hat{y}_n \\
 \end{bmatrix}
 $$
+
 由于 $y_k = 1$ 、其他 $y_i = 0$ ，上式可以改写成：
+
 $$
 \frac{\partial L}{\partial x} 
 =
@@ -567,6 +613,7 @@ $$
 =
 \hat{y} - y
 $$
+
 代码层面， $\hat{y}$ 即Softmax输出的概率分布 `probs` 、 $y$ 即真实标签的one-hot分布，考虑批次处理则结果还需除以 `batch_size` 。故可写出反向传播代码为：
 
 ```python
