@@ -1,6 +1,6 @@
 # Lab 4：卷积神经网络
 
-:man_student: 2022201535 樊昊天
+:man_student: Charles
 
 ## 习题1
 
