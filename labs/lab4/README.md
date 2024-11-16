@@ -5,6 +5,6 @@
 
 ---
 
-- [实验要求]([DeepLearning/labs/lab4/docs/requirements.md at master · Charles-T-T/DeepLearning](https://github.com/Charles-T-T/DeepLearning/blob/master/labs/lab4/docs/requirements.md))
-- [实验报告]([DeepLearning/labs/lab4/docs/report.md at master · Charles-T-T/DeepLearning](https://github.com/Charles-T-T/DeepLearning/blob/master/labs/lab4/docs/report.md)) 
-- [实验代码]([DeepLearning/labs/lab4/src/lab4.py at master · Charles-T-T/DeepLearning](https://github.com/Charles-T-T/DeepLearning/blob/master/labs/lab4/src/lab4.py)) 
+- [实验要求](https://github.com/Charles-T-T/DeepLearning/blob/master/labs/lab4/docs/requirements.md)
+- [实验报告](https://github.com/Charles-T-T/DeepLearning/blob/master/labs/lab4/docs/report.md)
+- [实验代码](https://github.com/Charles-T-T/DeepLearning/blob/master/labs/lab4/src/lab4.py)
