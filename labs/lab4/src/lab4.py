@@ -18,43 +18,50 @@ BATCH_SIZE = 50
 my_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-'''
+"""
 1.调用torchvision.datasets.MNIST 读取MNIST数据集 将数据包装为Dataset类
 2.通过DataLoader将dataset变量变为迭代器
 3.同样的方法处理训练和测试数据，设置BACTH_SIZE，思考train和test的时候是否需要shuffle
-'''
-
+"""
 # 下载MNIST数据集
 DOWNLOAD_MNIST = False
-if not (os.path.exists('./mnist/')) or not os.listdir('./mnist/'):
+if not (os.path.exists("./mnist/")) or not os.listdir("./mnist/"):
     DOWNLOAD_MNIST = True
 
 train_data = torchvision.datasets.MNIST(
-    root='./mnist/', train=True, transform=torchvision.transforms.ToTensor(), download=DOWNLOAD_MNIST)
-train_loader = Data.DataLoader(
-    dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
+    root="./mnist/",
+    train=True,
+    transform=torchvision.transforms.ToTensor(),
+    download=DOWNLOAD_MNIST,
+)
+train_loader = Data.DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
 
 test_data = torchvision.datasets.MNIST(
-    root='./mnist/', train=False, transform=torchvision.transforms.ToTensor(), download=DOWNLOAD_MNIST)
-test_loader = Data.DataLoader(
-    dataset=test_data, batch_size=BATCH_SIZE, shuffle=False)
+    root="./mnist/",
+    train=False,
+    transform=torchvision.transforms.ToTensor(),
+    download=DOWNLOAD_MNIST,
+)
+test_loader = Data.DataLoader(dataset=test_data, batch_size=BATCH_SIZE, shuffle=False)
 
 
-'''
+"""
 写一个卷积网络
     __init__: 初始化模型的地方，在这里声明模型的结构
     forward: 调用模型进行计算，输入为x（按照batch_size组织好的样本数据），输出为模型预测结果
-'''
+"""
 
 
 class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
         self.conv1 = nn.Conv2d(
-            in_channels=1, out_channels=32, kernel_size=7, padding=3, device=my_device)
+            in_channels=1, out_channels=32, kernel_size=7, padding=3, device=my_device
+        )
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv2 = nn.Conv2d(
-            in_channels=32, out_channels=64, kernel_size=5, padding=0, device=my_device)
+            in_channels=32, out_channels=64, kernel_size=5, padding=0, device=my_device
+        )
         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
         self.fc_3 = nn.Linear(64 * 5 * 5, 1024, device=my_device)
         self.relu = nn.ReLU()
@@ -84,7 +91,7 @@ def test(cnn):
     test_correct = 0
 
     with torch.no_grad():
-        for (images, labels) in test_loader:
+        for images, labels in test_loader:
             images, labels = images.to(my_device), labels.to(my_device)
             probs = cnn(images)
             _, predicted_labels = torch.max(probs, dim=1)
@@ -113,8 +120,15 @@ def train(cnn):
             total_loss += loss
 
             if step != 0 and step % 20 == 0:
-                print("=" * 10, step, "=" * 10,
-                      "test accuracy is", test(cnn), "%", "=" * 10)
+                print(
+                    "=" * 10,
+                    step,
+                    "=" * 10,
+                    "test accuracy is",
+                    test(cnn),
+                    "%",
+                    "=" * 10,
+                )
                 print(f"loss: {loss:.4f}")
 
         # avg_train_loss = total_loss / len(train_loader)
@@ -122,6 +136,6 @@ def train(cnn):
         # print(f"Epoch {epoch}, Train Loss: {avg_train_loss:.4f}, Test Acc: {accuracy}%")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cnn = CNN()
     train(cnn)
