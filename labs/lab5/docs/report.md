@@ -4,21 +4,14 @@
 
 1. 推导公式(6.40)和公式(6.41)中的梯度。
 
-$$
-\frac{\partial \mathcal{L}}{\partial \mathbf{W}} = \sum_{t=1}^T \sum_{k=1}^t \delta_{t, k} \mathbf{x}_k^\top, \tag{6.40}
-$$
+![6.40](./images/f6_40.svg)
 
-$$
-\frac{\partial \mathcal{L}}{\partial \mathbf{b}} = \sum_{t=1}^T \sum_{k=1}^t \delta_{t, k}. \tag{6.41}
-$$
+![6.41](./images/f6_41.svg)
 
 2. 试验证公式(6.31)中的 $z_k(z_k = Uh_{k-1} + Wx_k + b)$ 对 $u_{ij}$ 直接求偏导数 $(\partial^{+}zk / \partial u_{ij})$ 等价于递归下去对 $h_{k-1}$ 接着求导。
 
-$$
-\begin{equation}
-\frac{\partial \mathcal{L}_t}{\partial u_{ij}} = \sum_{k=1}^t \frac{\partial^+ z_k}{\partial u_{ij}} \frac{\partial \mathcal{L}_t}{\partial z_k}, \tag{6.31}
-\end{equation}
-$$
+![6.31](./images/f6_31.svg)
+
 
 # 代码题
 
