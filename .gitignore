@@ -2,6 +2,8 @@ draft/
 
 submit/
 
+__pycache__/
+
 /textbook
 
 /ppt
