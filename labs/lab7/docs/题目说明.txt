@@ -1,0 +1,6 @@
+题目共两个py文件
+different_optimizer.py用于比较不同优化器的效果
+different_weight_initialization.py用于比较不同权重初始化方法的效果区别
+
+需要做的：
+    将两个py文件填空补全，然后上传py文件和实验运行生成的可视化结果的截图
