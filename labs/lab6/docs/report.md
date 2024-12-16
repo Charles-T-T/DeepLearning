@@ -7,7 +7,6 @@
 **问题：** 分析点积缩放模型可以缓解softmax函数梯度消失的原因
 
 **解答：** 缩放点积模型为
-
 $$
 s(\boldsymbol{x}, \boldsymbol{q}) = \frac{\boldsymbol{x}^\top \boldsymbol{q}}{\sqrt{D}}
 $$
@@ -15,7 +14,7 @@ $$
 其中 $s(\boldsymbol{x}, \boldsymbol{q})$ 是注意力打分函数，用于计算注意力分布 $\alpha_n$ 
 
 $$
-\alpha_n = \text{softmax}(s(\boldsymbol{x}_n, \boldsymbol{q})) = \frac{\exp({s(\boldsymbol{x}_n, \boldsymbol{q})})}{\sum^N\_{j=1}\exp(s(\boldsymbol{x}_j, \boldsymbol{q}))}
+\alpha_n = \text{softmax}(s(\boldsymbol{x}_n, \boldsymbol{q})) = \frac{\exp({s(\boldsymbol{x}_n, \boldsymbol{q})})}{\sum^N_{j=1}\exp(s(\boldsymbol{x}_j, \boldsymbol{q}))}
 $$
 
 在未缩放（没有除以 $\sqrt{D}$ ）的情况下，点积模型的值通常会有比较大的方差， $\exp({s(\boldsymbol{x}, \boldsymbol{q})})$ 的方差也就越大，导致softmax的输出接近0或1，梯度趋于0，导致梯度消失；缩放后，缩小了 $s(\boldsymbol{x}, \boldsymbol{q})$ 的范围，相当于softmax的输入更集中了，从而缓解其梯度消失。
@@ -75,7 +74,7 @@ class Seq2SeqModel(nn.Module):
 
 运行结果：
 
-![output1](.\..\images\output1.png)
+![output1](.\images\output1.png)
 
  `seq2seq_attention.py` ：
 
@@ -141,4 +140,4 @@ class Seq2SeqModel(nn.Module):
 
 运行结果：
 
-![output2](.\..\images\output2.png)
+![output2](.\images\output2.png)
